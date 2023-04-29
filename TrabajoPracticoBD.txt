@@ -1,0 +1,45 @@
+
+1-Modelo relacional:
+
+Empleado(DNI, Nombre, Apellido, Nacionalidad, IdDepartamento)
+Departamento(IdDepartamento, Presupuesto)
+
+2-Modelo en MySQL:
+
+CREATE TABLE Empleado (
+    DNI VARCHAR(20) PRIMARY KEY,
+    Nombre VARCHAR(50) NOT NULL,
+    Apellido VARCHAR(50) NOT NULL,
+    Nacionalidad VARCHAR(50) NOT NULL,
+    IdDepartamento INT NOT NULL,
+    FOREIGN KEY (IdDepartamento) REFERENCES Departamento(IdDepartamento)
+);
+
+CREATE TABLE Departamento (
+    IdDepartamento INT PRIMARY KEY,
+    Presupuesto FLOAT NOT NULL
+);
+
+3-Consultas:
+
+-Insertar un empleado nuevo:
+INSERT INTO Empleado (DNI, Nombre, Apellido, Nacionalidad, IdDepartamento)
+VALUES ('12345678A', 'Juan', 'Pérez', 'Española', 1);
+-Modificar la nacionalidad de algún empleado:
+UPDATE Empleado
+SET Nacionalidad = 'Argentina'
+WHERE DNI = '12345678A';
+-Eliminar un departamento:
+DELETE FROM Departamento
+WHERE IdDepartamento = 3;
+-Conocer los empleados que trabajan en el departamento de "logística":
+SELECT * FROM Empleado
+WHERE IdDepartamento = (SELECT IdDepartamento FROM Departamento WHERE Nombre = 'logística');
+-Mostrar todos los departamentos ordenados alfabéticamente:
+
+-ACLARACIONES:
+
+1-La consulta para conocer los empleados que trabajan en el departamento de "logística" es un ejemplo
+ y puede variar según cómo se haya insertado el nombre del departamento en la base de datos.
+2-Se asume que la columna "Nombre" de la tabla "Departamento" contiene el nombre del departamento.
+Si se utiliza otra columna para almacenar el nombre, se debe modificar la consulta correspondiente.
